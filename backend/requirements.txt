@@ -1,0 +1,28 @@
+# Web framework
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+
+# Database
+sqlalchemy[asyncio]>=2.0.0
+asyncpg>=0.30.0
+pgvector>=0.3.6
+
+# Redis
+redis>=5.0.0
+
+# Configuration
+pydantic-settings>=2.6.0
+pydantic>=2.10.0
+
+# Embedding & LLM
+openai>=1.50.0
+google-genai>=1.0.0
+
+# Sensitive word matching
+pyahocorasick>=2.1.0
+
+# Caching
+cachetools>=5.5.0
+
+# Data import
+openpyxl>=3.1.0
