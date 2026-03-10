@@ -18,6 +18,15 @@ node_modules/
 .next/
 out/
 frontend/.env
+frontend/next-env.d.ts
+frontend/.next/
+frontend/out/
+package-lock.json
+frontend/package-lock.json
+backend/package-lock.json
+*.lock
+pnpm-lock.yaml
+yarn.lock
 
 # IDE
 .vscode/
