@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>Open-Source Firewall for LLMs & AI Agents</strong><br/>
+  <strong>Open-Source guardrails for LLMs & AI Agents</strong><br/>
   Real-time Prompt Injection Detection · Sensitive Word Filtering · AI Safety Guardrails
 </p>
 
@@ -30,7 +30,7 @@
 
 ## What is Prompt Inspector?
 
-**Prompt Inspector** is an open-source security firewall purpose-built for LLM applications and AI agents. As generative AI becomes embedded in production systems, prompt injection, jailbreaks, and adversarial manipulation have become critical attack vectors. Prompt Inspector sits between user input and your LLM, providing a real-time, multi-layer defense engine that catches threats before they ever reach your model.
+**Prompt Inspector** is an open-source security guardrails purpose-built for LLM applications and AI agents. As generative AI becomes embedded in production systems, prompt injection, jailbreaks, and adversarial manipulation have become critical attack vectors. Prompt Inspector sits between user input and your LLM, providing a real-time, multi-layer defense engine that catches threats before they ever reach your model.
 
 Whether you're building a customer-facing chatbot, an autonomous agent, or an AI coding tool, Prompt Inspector provides the security layer your AI stack is missing.
 
