@@ -1,12 +1,11 @@
 """
 Multi-layer prompt injection detection engine.
 
-Layer 1: Global hash cache (Redis SHA-256)         — < 2ms
-Layer 2: Built-in sensitive word matching (AC automaton) — < 1ms
-Layer 3: Semantic vector search (Embedding + pgvector)   — 30-60ms
-Layer 4: LLM review (gray zone)                         — optional
-Layer 5: Arbitration & response assembly                 — < 1ms
-
+Layer 1: Global hash cache (Redis SHA-256)
+Layer 2: Built-in sensitive word matching (AC automaton)
+Layer 3: Semantic vector search (Embedding + pgvector)
+Layer 4: LLM review (gray zone)
+Layer 5: Arbitration & response assembly
 Score ranges (0~1 float):
   score >= VEC_SIM_HIGH  → confirmed threat
   VEC_SIM_LOW < score < VEC_SIM_HIGH → LLM review
@@ -27,7 +26,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import settings
 from app.database import async_session
 from app.logger import logger
-from app.models.claw_sensitive_word import ClawSensitiveWord
+from app.models.sensitive_word import SensitiveWord
 from app.models.category_config import CategoryConfig
 from app.services.redis_service import (
     get_detection_cache,
@@ -110,7 +109,7 @@ async def _get_sensitive_word_matchers() -> tuple[ahocorasick.Automaton, list[st
     cached_words = await get_sensitive_words_from_cache()
     if cached_words is None:
         async with async_session() as db:
-            result = await db.execute(select(ClawSensitiveWord))
+            result = await db.execute(select(SensitiveWord))
             db_words = result.scalars().all()
             cached_words = [{"word": w.word, "match_type": w.match_type or "literal"} for w in db_words]
             await load_sensitive_words_to_cache(cached_words)

@@ -1,5 +1,5 @@
 """
-Import sensitive words from an Excel file into the claw_sensitive_words table.
+Import sensitive words from an Excel file into the sensitive_words table.
 
 Excel columns: Category, MatchType, Word, Description
 Used columns: Word, MatchType, Description
@@ -8,7 +8,7 @@ Usage:
     python -m scripts.import_sensitive_words <excel_file_path>
 
 Example:
-    python -m scripts.import_sensitive_words data/claw_words.xlsx
+    python -m scripts.import_sensitive_words data/sensitive_words.xlsx
 """
 
 import sys
@@ -20,13 +20,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import openpyxl
 from sqlalchemy import select
 from app.database import async_session, init_db
-from app.models.claw_sensitive_word import ClawSensitiveWord
+from app.models.sensitive_word import SensitiveWord
 
 VALID_MATCH_TYPES = {"literal", "pattern"}
 
 
 async def import_from_excel(file_path: str):
-    """Read Excel and import into claw_sensitive_words table."""
+    """Read Excel and import into sensitive_words table."""
     path = Path(file_path)
     if not path.exists():
         print(f"Error: File not found: {file_path}")
@@ -72,7 +72,7 @@ async def import_from_excel(file_path: str):
     await init_db()
 
     async with async_session() as db:
-        result = await db.execute(select(ClawSensitiveWord.word))
+        result = await db.execute(select(SensitiveWord.word))
         existing_words = {r[0].lower() for r in result.all()}
 
         imported = 0
@@ -81,7 +81,7 @@ async def import_from_excel(file_path: str):
             if word.lower() in existing_words:
                 duplicates += 1
                 continue
-            db.add(ClawSensitiveWord(
+            db.add(SensitiveWord(
                 word=word,
                 match_type=match_type,
                 description=description,

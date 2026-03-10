@@ -8,9 +8,9 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.database import Base
 
 
-class ClawSensitiveWord(Base):
+class SensitiveWord(Base):
     """Built-in sensitive words for content filtering."""
-    __tablename__ = "claw_sensitive_words"
+    __tablename__ = "sensitive_words"
 
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4

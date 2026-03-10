@@ -51,6 +51,13 @@ export default function PlaygroundPage() {
     if (saved) {
       setApiKey(saved);
       setApiKeyInput(saved);
+    } else {
+      // Use default API key from environment variable if available
+      const defaultKey = process.env.NEXT_PUBLIC_API_KEY || "";
+      if (defaultKey) {
+        setApiKey(defaultKey);
+        setApiKeyInput(defaultKey);
+      }
     }
   }, []);
 
