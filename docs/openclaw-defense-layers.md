@@ -1,6 +1,6 @@
 # OpenClaw's Three-Layer Static Defense and the Case for Prompt Inspector
 
-> **OpenClaw version analyzed**: [v2026.3.13](https://github.com/openclaw/openclaw)  
+> **OpenClaw version analyzed**: [v2026.3.13](https://github.com/openclaw/openclaw/releases/tag/v2026.3.13)  
 > **Files examined**:
 > - `src/security/external-content.ts`
 > - `src/agents/sanitize-for-prompt.ts`
@@ -242,7 +242,7 @@ The three layers above are **necessary first-line defenses**:
 
 However, they share a fundamental ceiling: **they are all static and pattern-matched**. An attacker who avoids the covered patterns bypasses all three simultaneously. Prompt Inspector addresses the gap:
 
-| Property | Static layers | Prompt Inspector |
+| Property | OpenClaw Static Layers | Prompt Inspector |
 |---|---|---|
 | Detection basis | Keyword / regex / character set | ML semantic model |
 | Multilingual | English-only | Multilingual training data |
@@ -253,18 +253,3 @@ However, they share a fundamental ceiling: **they are all static and pattern-mat
 
 The recommended posture is **complementary, not replacement**: the static layers filter obvious and fast-path attacks at near-zero cost; Prompt Inspector handles the long tail of semantic and multilingual variants that no finite regex set can enumerate.
 
----
-
-## Summary of Changes in v2026.3.13
-
-The following differences exist between the current codebase and earlier design documents:
-
-| Item | Earlier description | v2026.3.13 actual |
-|---|---|---|
-| Regex count in `SUSPICIOUS_PATTERNS` | 34 | **13** (refined, not expanded) |
-| `sanitizeForPromptLiteral` scope | Named character groups | **Unicode property escapes** `\p{Cc}\p{Cf}` — broader |
-| Data block wrapping format | Triple-quote `"""` | **`<untrusted-text>` XML tag** + HTML entity escaping |
-| Magic string function name | `stripAnthropicMagicStrings` | **`scrubAnthropicRefusalMagic`** |
-| Magic string target | `\|MAGIC_STRING\|[a-zA-Z0-9_-]+` | **`ANTHROPIC_MAGIC_STRING_TRIGGER_REFUSAL`** (literal) |
-| Magic string location | `pi-embedded-runner/run/attempt.ts` | **`pi-embedded-runner/run.ts`** |
-| New in v2026.3.13 | — | `replaceMarkers()` anti-spoofing, `wrapWebContent()`, `buildSafeExternalPrompt()` |
